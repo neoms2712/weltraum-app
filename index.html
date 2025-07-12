@@ -314,6 +314,18 @@
       y: 50,
       opacity: 0
     });
+
+    // Mondphase
+fetch('https://api.farmsense.net/v1/moonphases/?d=' + Math.floor(Date.now() / 1000))
+  .then(res => res.json())
+  .then(data => {
+    const moonPhase = data[0]?.Phase || 'Nicht verfügbar';
+    document.getElementById('moon-phase').innerText = `Nächste Phase: ${moonPhase}`;
+  })
+  .catch(() => {
+    document.getElementById('moon-phase').innerText = 'Fehler beim Laden der Mondphase.';
+  });
+
   </script>
 <script>
   const map = new ol.Map({
@@ -353,6 +365,235 @@ function closeLightbox() {
 <div id="lightbox" onclick="closeLightbox()">
   <img id="lightbox-img" src="" alt="Mars Foto groß">
 </div>
+
+<div class="card">
+  <h2>Nächste Mondphase</h2>
+  <p id="moon-phase">Lade Mondphasen...</p>
+</div>
+
+<div class="card">
+  <h2>Bevorstehende Himmelsereignisse</h2>
+  <ul id="sky-events"></ul>
+</div>
+
+<script>
+  const skyEvents = [
+    { date: "10. Juli 2025", name: "Bockmond 🌕" },
+    { date: "24. Juli 2025", name: "Neumond 🌑" },
+    { date: "9. August 2025", name: "Störmond 🌕" },
+    { date: "12./13. August 2025", name: "Perseiden-Meteorschauer 🌠" },
+    { date: "19. August 2025", name: "Merkur in größter westlicher Elongation ☿️" },
+    { date: "23. August 2025", name: "Black Moon 🌑" },
+    { date: "7./8. September 2025", name: "Totale Mondfinsternis 🌘" },
+    { date: "7. September 2025", name: "Maismond 🌕" },
+    { date: "21. September 2025", name: "Partielle Sonnenfinsternis 🌒" },
+    { date: "21. September 2025", name: "Neumond 🌑" },
+    { date: "21. September 2025", name: "Saturn in Opposition 🪐" },
+    { date: "22. September 2025", name: "Herbst-Tagundnachtgleiche 🍁" },
+    { date: "7. Oktober 2025", name: "Erntemond 🌕" },
+    { date: "8./9. Oktober 2025", name: "Draconiden-Meteorschauer 🌠" },
+    { date: "21. Oktober 2025", name: "Neumond 🌑" },
+    { date: "21./22. Oktober 2025", name: "Orioniden-Meteorschauer 🌟" },
+    { date: "29. Oktober 2025", name: "Merkur in größter östlicher Elongation ☿️" },
+    { date: "5. November 2025", name: "Super-Bibermond 🌕✨" },
+    { date: "17./18. November 2025", name: "Leoniden-Meteorschauer 🌠" },
+    { date: "20. November 2025", name: "Mini-Neumond 🌑" },
+    { date: "4. Dezember 2025", name: "Super-Julmond 🌕❄️" },
+    { date: "7. Dezember 2025", name: "Merkur in größter westlicher Elongation ☿️" },
+    { date: "13./14. Dezember 2025", name: "Geminiden-Meteorschauer 🌠" },
+    { date: "20. Dezember 2025", name: "Neumond 🌑" },
+    { date: "21. Dezember 2025", name: "Wintersonnenwende ❄️" },
+    { date: "21./22. Dezember 2025", name: "Ursiden-Meteorschauer 🌠" }
+  ];
+
+  // Hilfsfunktion: Monatsname auf Nummer mappen
+  const monthMap = {
+    "Januar": 0,
+    "Februar": 1,
+    "März": 2,
+    "April": 3,
+    "Mai": 4,
+    "Juni": 5,
+    "Juli": 6,
+    "August": 7,
+    "September": 8,
+    "Oktober": 9,
+    "November": 10,
+    "Dezember": 11
+  };
+
+  function extractMonth(eventDateStr) {
+    // Beispiel Input: "10. Juli 2025" oder "12./13. August 2025"
+    // Wir suchen das Wort für Monat raus
+    const months = Object.keys(monthMap);
+    for (const month of months) {
+      if (eventDateStr.includes(month)) {
+        return monthMap[month];
+      }
+    }
+    return null;
+  }
+
+  // Aktuellen Monat bekommen
+  const now = new Date();
+  const currentMonth = now.getMonth();
+  const currentYear = now.getFullYear();
+
+  // Filter: nur Ereignisse vom aktuellen Monat und Jahr
+  const filteredEvents = skyEvents.filter(evt => {
+    // Monat aus String
+    const monthNum = extractMonth(evt.date);
+    // Jahr aus String holen (letzte 4 Ziffern, z.B. 2025)
+    const yearMatch = evt.date.match(/\d{4}/);
+    const yearNum = yearMatch ? parseInt(yearMatch[0]) : null;
+
+    return monthNum === currentMonth && yearNum === currentYear;
+  });
+
+  const ul = document.getElementById("sky-events");
+
+  if (filteredEvents.length === 0) {
+    const li = document.createElement("li");
+    li.textContent = "Keine Himmelsereignisse im aktuellen Monat.";
+    ul.appendChild(li);
+  } else {
+    filteredEvents.forEach(evt => {
+      const li = document.createElement("li");
+      li.textContent = `${evt.date} – ${evt.name}`;
+      ul.appendChild(li);
+    });
+  }
+</script>
+
+<section class="card" id="local-sky-events" style="max-width:900px; margin: 2rem auto;">
+  <h2 style="font-size:2.5rem; font-weight:900; text-align:center; margin-bottom:1rem; color:#003366;">
+    Linda, schau mal, was gerade jetzt direkt über Buchloe passiert!
+  </h2>
+  <ul style="font-size:1.2rem; line-height:1.6; list-style: none; padding:0; color:#1d1d1f;">
+    <li><strong>Sonnenaufgang:</strong> <span id="sunrise"></span></li>
+    <li><strong>Sonnenuntergang:</strong> <span id="sunset"></span></li>
+    <li><strong>Mondaufgang:</strong> <span id="moonrise"></span></li>
+    <li><strong>Monduntergang:</strong> <span id="moonset"></span></li>
+    <li><strong>Aktuelle Mondphase:</strong> <span id="moonphase"></span></li>
+    <li><strong>Nächster sichtbarer Meteorschauer:</strong> <span id="next-meteor-shower"></span></li>
+    <li><strong>ISS-Sichtungen heute:</strong> <div id="iss-pass"></div></li>
+  </ul>
+</section>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/suncalc/1.9.0/suncalc.min.js"></script>
+
+<script>
+(async function() {
+  const lat = 48.05;  // Buchloe
+  const lon = 10.85;
+  const now = new Date();
+
+  // --- SunCalc Daten ---
+  const times = SunCalc.getTimes(now, lat, lon);
+  const moonTimes = SunCalc.getMoonTimes(now, lat, lon);
+  const moonIllum = SunCalc.getMoonIllumination(now);
+
+  function formatTime(date) {
+    if (!date) return "nicht sichtbar heute";
+    return date.toLocaleTimeString('de-DE', {hour: '2-digit', minute: '2-digit'});
+  }
+
+  function getMoonPhaseName(phase) {
+    if (phase === 0 || phase === 1) return "Neumond 🌑";
+    else if (phase < 0.25) return "Zunehmender Sichelmond 🌒";
+    else if (phase === 0.25) return "Erstes Viertel 🌓";
+    else if (phase < 0.5) return "Zunehmender Mond 🌔";
+    else if (phase === 0.5) return "Vollmond 🌕";
+    else if (phase < 0.75) return "Abnehmender Mond 🌖";
+    else if (phase === 0.75) return "Letztes Viertel 🌗";
+    else return "Abnehmende Mondsichel 🌘";
+  }
+
+  // --- Meteorschauer Liste ---
+  const meteorShowers = [
+    { name: "Bockmond", date: new Date(now.getFullYear(), 6, 10) },      // 10. Juli
+    { name: "Neumond", date: new Date(now.getFullYear(), 6, 24) },       // 24. Juli
+    { name: "Störmond", date: new Date(now.getFullYear(), 7, 9) },       // 9. August
+    { name: "Perseiden-Meteorschauer", date: new Date(now.getFullYear(), 7, 12) }, // 12./13. Aug
+    { name: "Merkur in größter westlicher Elongation", date: new Date(now.getFullYear(), 7, 19) },
+    { name: "Black Moon", date: new Date(now.getFullYear(), 7, 23) },
+    { name: "Totale Mondfinsternis", date: new Date(now.getFullYear(), 8, 7) },
+    { name: "Maismond", date: new Date(now.getFullYear(), 8, 7) },
+    { name: "Partielle Sonnenfinsternis", date: new Date(now.getFullYear(), 8, 21) },
+    { name: "Neumond", date: new Date(now.getFullYear(), 8, 21) },
+    { name: "Saturn in Opposition", date: new Date(now.getFullYear(), 8, 21) },
+    { name: "September-Tagundnachtgleiche", date: new Date(now.getFullYear(), 8, 22) },
+    { name: "Erntemond", date: new Date(now.getFullYear(), 9, 7) },
+    { name: "Draconiden-Meteorschauer", date: new Date(now.getFullYear(), 9, 8) },
+    { name: "Neumond", date: new Date(now.getFullYear(), 9, 21) },
+    { name: "Orioniden-Meteorschauer", date: new Date(now.getFullYear(), 9, 21) },
+    { name: "Merkur in größter östlicher Elongation", date: new Date(now.getFullYear(), 9, 29) },
+    { name: "Super-Bibermond", date: new Date(now.getFullYear(), 10, 5) },
+    { name: "Leoniden-Meteorschauer", date: new Date(now.getFullYear(), 10, 17) },
+    { name: "Mini-Neumond", date: new Date(now.getFullYear(), 10, 20) },
+    { name: "Super-Julmond", date: new Date(now.getFullYear(), 11, 4) },
+    { name: "Merkur in größter westlicher Elongation", date: new Date(now.getFullYear(), 11, 7) },
+    { name: "Geminiden-Meteorschauer", date: new Date(now.getFullYear(), 11, 13) },
+    { name: "Neumond", date: new Date(now.getFullYear(), 11, 20) },
+    { name: "Dezember-Sonnenwende", date: new Date(now.getFullYear(), 11, 21) },
+    { name: "Ursiden-Meteorschauer", date: new Date(now.getFullYear(), 11, 21) }
+  ];
+
+  function getNextMeteorShower(today) {
+    let next = null;
+    for (const shower of meteorShowers) {
+      let showerDate = shower.date;
+      if (showerDate < today) {
+        showerDate = new Date(showerDate.getFullYear() + 1, showerDate.getMonth(), showerDate.getDate());
+      }
+      if (!next || showerDate < next.date) {
+        next = { name: shower.name, date: showerDate };
+      }
+    }
+    return next;
+  }
+
+  // --- ISS Daten von wheretheiss.at ---
+  async function fetchISSData() {
+    try {
+      const nowTimestamp = Math.floor(now.getTime() / 1000);
+      const url = `https://api.wheretheiss.at/v1/satellites/25544/passes?lat=${lat}&lon=${lon}&alt=500&n=5`;
+      const res = await fetch(url);
+      if (!res.ok) throw new Error('Fehler beim Laden der ISS-Daten');
+      const data = await res.json();
+      return data;
+    } catch (err) {
+      console.error(err);
+      return null;
+    }
+  }
+
+  function formatISSPass(pass) {
+    const start = new Date(pass.start * 1000);
+    const durationMin = Math.round(pass.duration / 60);
+    return `Start: ${start.toLocaleTimeString('de-DE', {hour:'2-digit', minute:'2-digit'})} Uhr, Dauer: ${durationMin} Min`;
+  }
+
+  // --- DOM füllen ---
+  document.getElementById('sunrise').textContent = formatTime(times.sunrise);
+  document.getElementById('sunset').textContent = formatTime(times.sunset);
+  document.getElementById('moonrise').textContent = formatTime(moonTimes.rise);
+  document.getElementById('moonset').textContent = formatTime(moonTimes.set);
+  document.getElementById('moonphase').textContent = getMoonPhaseName(moonIllum.phase);
+
+  const nextMeteor = getNextMeteorShower(now);
+  document.getElementById('next-meteor-shower').textContent = `${nextMeteor.name} am ${nextMeteor.date.toLocaleDateString('de-DE', {day:'numeric', month:'long'})}`;
+
+  const issPasses = await fetchISSData();
+  const issDiv = document.getElementById('iss-pass');
+  if (issPasses && issPasses.length > 0) {
+    issDiv.innerHTML = issPasses.slice(0, 3).map(formatISSPass).map(p => `<p>${p}</p>`).join('');
+  } else {
+    issDiv.textContent = 'Keine ISS-Sichtungen verfügbar.';
+  }
+
+})();
+</script>
 
 </body>
 </html>
