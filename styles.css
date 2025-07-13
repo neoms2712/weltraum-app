@@ -1,38 +1,93 @@
+/* Grundlegendes Reset & Schrift */
 html, body {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
   font-family: 'Inter', sans-serif;
   scroll-behavior: smooth;
-  background-color: #fff;
-  color: #1d1d1f;
+  background: radial-gradient(ellipse at bottom, #000022 0%, #000011 70%);
+  color: #ccd6f6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  height: 100%;
+  position: relative;
 }
 
+/* Sternen-Overlay (optional, kann auch mit JS gemacht werden) */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  background:
+    radial-gradient(2px 2px at 20% 15%, #a0bfff, transparent),
+    radial-gradient(1.5px 1.5px at 35% 35%, #c0d0ff, transparent),
+    radial-gradient(1px 1px at 50% 50%, #809cff, transparent),
+    radial-gradient(2px 2px at 75% 60%, #aabfff, transparent),
+    radial-gradient(1.5px 1.5px at 85% 30%, #809dff, transparent);
+  background-repeat: repeat;
+  background-size: 100px 100px;
+  opacity: 0.3;
+  z-index: 0;
+  animation: twinkle 20s linear infinite;
+}
+
+@keyframes twinkle {
+  0%, 100% {opacity: 0.3;}
+  50% {opacity: 0.5;}
+}
+
+/* Nebelschwaden-Overlay */
+.nebula-overlay {
+  pointer-events: none;
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  background:
+    radial-gradient(circle at 20% 30%, rgba(120, 140, 255, 0.25), transparent 70%),
+    radial-gradient(circle at 75% 60%, rgba(180, 200, 255, 0.2), transparent 70%);
+  animation: nebulaMove 40s ease-in-out infinite alternate;
+  z-index: 1;
+}
+
+@keyframes nebulaMove {
+  0% {
+    background-position: 20% 30%, 75% 60%;
+  }
+  100% {
+    background-position: 23% 33%, 72% 58%;
+  }
+}
+
+/* Sections */
 section {
   position: relative;
   width: 100%;
+  z-index: 2;
 }
 
-.fullscreen, .parallax {
+/* Parallax Background (für hero / große Sektionen) */
+.parallax {
+  background-image: url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?auto=format&fit=crop&w=1350&q=80');
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: #f0f5ff;
+  text-shadow: 0 0 8px rgba(0, 0, 30, 0.9);
+  font-size: 3.5rem;
+  font-weight: 900;
   height: 100vh;
   display: flex;
-  align-items: center;
   justify-content: center;
-  font-size: 4rem;
-  font-weight: 900;
-  z-index: 3;
-  position: relative;
-  background: white;
-  flex-direction: column;
-  will-change: transform, opacity;
+  align-items: center;
+  user-select: none;
+  padding: 0 2rem;
   text-align: center;
-  padding: 0 1rem;
 }
 
-.parallax {
-  font-size: 3rem;
-}
-
+/* Hero Video Section */
 .hero-video-section {
   position: relative;
   height: 100vh;
@@ -41,6 +96,8 @@ section {
   display: flex;
   align-items: center;
   justify-content: center;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,50,0.85));
+  z-index: 2;
 }
 
 .hero-video {
@@ -51,73 +108,133 @@ section {
   height: 100%;
   object-fit: cover;
   z-index: 0;
+  filter: brightness(0.7);
+  transition: filter 0.3s ease;
+}
+
+.hero-video-section:hover .hero-video {
+  filter: brightness(0.9);
 }
 
 .hero-overlay {
   position: relative;
   z-index: 1;
-  color: white;
+  color: #d0e0ff;
   text-align: center;
   font-size: 3rem;
-  font-weight: bold;
-  text-shadow: 0 0 10px rgba(0,0,0,0.6);
+  font-weight: 900;
+  text-shadow: 0 0 15px rgba(0, 0, 60, 0.8);
+  padding: 0 1rem;
+  max-width: 900px;
+  animation: floatText 5s ease-in-out infinite alternate;
 }
 
+@keyframes floatText {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-15px); }
+}
+
+/* Content Section */
 .content-section {
-  padding: 4rem 1rem;
-  background: #f9f9f9;
-  z-index: 1;
+  padding: 4rem 1rem 6rem;
+  background: rgba(5, 15, 50, 0.85);
+  border-radius: 24px;
+  max-width: 960px;
+  margin: 3rem auto 6rem;
+  box-shadow: 0 0 60px rgba(60, 100, 220, 0.4);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 }
 
+/* Card Styles */
 .card {
-  background: #fff;
-  padding: 2rem;
-  border-radius: 20px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  background: rgba(10, 20, 60, 0.8);
+  padding: 2.5rem 2rem;
+  border-radius: 24px;
+  box-shadow: 0 8px 25px rgba(60, 120, 255, 0.25);
   margin-bottom: 2rem;
   max-width: 900px;
-  margin-left: auto;
-  margin-right: auto;
+  width: 100%;
+  transition: box-shadow 0.3s ease;
+  color: #d6dffb;
+  cursor: default;
+}
+
+.card:hover {
+  box-shadow: 0 15px 45px rgba(80, 150, 255, 0.45);
 }
 
 h2 {
-  font-size: 2rem;
-  margin-bottom: 1rem;
+  font-size: 2.4rem;
+  margin-bottom: 1.2rem;
+  color: #a0c0ff;
+  font-weight: 900;
+  text-shadow: 0 0 15px rgba(100, 140, 255, 0.8);
 }
 
 p {
-  font-size: 1.1rem;
-  line-height: 1.6;
+  font-size: 1.15rem;
+  line-height: 1.7;
+  color: #c0cfff;
+  margin-bottom: 1rem;
+  font-weight: 500;
 }
 
+/* Mars Gallery */
 #mars-gallery {
   display: flex;
-  gap: 1rem;
+  gap: 1.2rem;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
+  padding-bottom: 0.3rem;
+  -webkit-overflow-scrolling: touch;
 }
 
 #mars-gallery img {
   scroll-snap-align: center;
   width: 200px;
-  border-radius: 16px;
+  border-radius: 20px;
   flex-shrink: 0;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  box-shadow: 0 6px 18px rgba(50, 90, 200, 0.3);
 }
 
+#mars-gallery img:hover {
+  transform: scale(1.07);
+  box-shadow: 0 10px 35px rgba(90, 140, 255, 0.45);
+}
+
+/* Beschreibung mit Toggle */
 .description {
   max-height: 200px;
   overflow: hidden;
   transition: max-height 0.5s ease;
+  color: #b0bfff;
+  font-size: 1rem;
+  line-height: 1.5;
 }
 
 .description.expanded {
   max-height: 1000px;
 }
 
+/* Toggle Button */
 .toggle-btn {
   cursor: pointer;
-  color: #007aff;
-  font-weight: bold;
+  color: #7aa7ff;
+  font-weight: 700;
+  font-size: 1rem;
+  user-select: none;
+  margin-top: 0.5rem;
+  transition: color 0.25s ease;
+}
+
+.toggle-btn:hover {
+  color: #a0bfff;
+  text-decoration: underline;
 }
 
 /* Lightbox Style */
@@ -127,26 +244,34 @@ p {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0,0,0,0.9);
+  background-color: rgba(0,0,30,0.95);
   display: none;
   align-items: center;
   justify-content: center;
   z-index: 9999;
+  cursor: zoom-out;
+  padding: 1rem;
 }
+
 #lightbox img {
   max-width: 90%;
   max-height: 90%;
-  border-radius: 10px;
-  box-shadow: 0 0 20px black;
-  cursor: zoom-out;
+  border-radius: 12px;
+  box-shadow: 0 0 40px rgba(50, 100, 255, 0.9);
+  user-select: none;
 }
 
-@media (max-width: 768px) {
-  .fullscreen, .parallax, .hero-overlay {
-    font-size: 2.5rem;
+/* Responsive Breakpoints */
+@media (max-width: 992px) {
+  .fullscreen, .parallax {
+    font-size: 3rem;
+    padding: 0 1rem;
+  }
+  .hero-overlay {
+    font-size: 2.4rem;
   }
   h2 {
-    font-size: 1.5rem;
+    font-size: 1.7rem;
   }
   p {
     font-size: 1rem;
@@ -154,4 +279,57 @@ p {
   #mars-gallery img {
     width: 140px;
   }
+}
+
+@media (max-width: 576px) {
+  .fullscreen, .parallax {
+    font-size: 2rem;
+    padding: 0 0.5rem;
+  }
+  .hero-overlay {
+    font-size: 1.6rem;
+    padding: 0 1rem;
+  }
+  h2 {
+    font-size: 1.3rem;
+  }
+  p {
+    font-size: 0.95rem;
+  }
+  #mars-gallery {
+    gap: 0.7rem;
+  }
+  #mars-gallery img {
+    width: 110px;
+  }
+  .card {
+    padding: 1.3rem 1.5rem;
+    border-radius: 14px;
+  }
+}
+
+/* Scrollbar Styling für Webkit */
+#mars-gallery::-webkit-scrollbar {
+  height: 8px;
+}
+#mars-gallery::-webkit-scrollbar-track {
+  background: #111a3c;
+  border-radius: 4px;
+}
+#mars-gallery::-webkit-scrollbar-thumb {
+  background: #4977ff;
+  border-radius: 4px;
+}
+
+/* Feinjustierung der Links und Buttons */
+a, button {
+  outline: none;
+  border: none;
+  background: none;
+  color: #78a0ff;
+}
+
+a:hover, button:hover {
+  text-decoration: underline;
+  color: #a0bfff;
 }
