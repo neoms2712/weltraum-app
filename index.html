@@ -4,171 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Hallo Linda</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v7.5.0/ol.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v7.5.0/ol.css" />
+  <link rel="stylesheet" href="styles.css" />
+  
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/ol@v7.5.0/dist/ol.js"></script>
-
-  <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      overflow-x: hidden;
-      font-family: 'Inter', sans-serif;
-      scroll-behavior: smooth;
-      background-color: #fff;
-      color: #1d1d1f;
-    }
-
-    section {
-      position: relative;
-      width: 100%;
-    }
-
-    .fullscreen, .parallax {
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 4rem;
-      font-weight: 900;
-      z-index: 3;
-      position: relative;
-      background: white;
-      flex-direction: column;
-      will-change: transform, opacity;
-      text-align: center;
-      padding: 0 1rem;
-    }
-
-    .parallax {
-      font-size: 3rem;
-    }
-
-    .hero-video-section {
-      position: relative;
-      height: 100vh;
-      width: 100%;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .hero-video {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      z-index: 0;
-    }
-
-    .hero-overlay {
-      position: relative;
-      z-index: 1;
-      color: white;
-      text-align: center;
-      font-size: 3rem;
-      font-weight: bold;
-      text-shadow: 0 0 10px rgba(0,0,0,0.6);
-    }
-
-    .content-section {
-      padding: 4rem 1rem;
-      background: #f9f9f9;
-      z-index: 1;
-    }
-
-    .card {
-      background: #fff;
-      padding: 2rem;
-      border-radius: 20px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-      margin-bottom: 2rem;
-      max-width: 900px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    h2 {
-      font-size: 2rem;
-      margin-bottom: 1rem;
-    }
-
-    p {
-      font-size: 1.1rem;
-      line-height: 1.6;
-    }
-
-    #mars-gallery {
-      display: flex;
-      gap: 1rem;
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-    }
-
-    #mars-gallery img {
-      scroll-snap-align: center;
-      width: 200px;
-      border-radius: 16px;
-      flex-shrink: 0;
-    }
-
-    .description {
-      max-height: 200px;
-      overflow: hidden;
-      transition: max-height 0.5s ease;
-    }
-
-    .description.expanded {
-      max-height: 1000px;
-    }
-
-    .toggle-btn {
-      cursor: pointer;
-      color: #007aff;
-      font-weight: bold;
-    }
-    /* Lightbox Style */
-#lightbox {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0,0,0,0.9);
-  display: none;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
-}
-#lightbox img {
-  max-width: 90%;
-  max-height: 90%;
-  border-radius: 10px;
-  box-shadow: 0 0 20px black;
-  cursor: zoom-out;
-}
-
-
-    @media (max-width: 768px) {
-      .fullscreen, .parallax, .hero-overlay {
-        font-size: 2.5rem;
-      }
-      h2 {
-        font-size: 1.5rem;
-      }
-      p {
-        font-size: 1rem;
-      }
-      #mars-gallery img {
-        width: 140px;
-      }
-    }
-  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/suncalc/1.9.0/suncalc.min.js"></script>
 </head>
 <body>
 
@@ -182,12 +25,10 @@
 
   <section class="hero-video-section">
     <video autoplay muted loop playsinline class="hero-video">
-      <source src="Weltallvideo.mp4" type="video/mp4">
+      <source src="Weltallvideo.mp4" type="video/mp4" />
       Dein Browser unterstützt dieses Video nicht.
     </video>
-    <div class="hero-overlay">
-      Deine Reise beginnt hier
-    </div>
+    <div class="hero-overlay">Deine Reise beginnt hier</div>
   </section>
 
   <section class="content-section" id="nasa-content">
@@ -208,264 +49,26 @@
     </div>
 
     <div class="card">
-  <h2>NASA GIBS Weltkarte (MODIS Echtfarben)</h2>
-  <div id="gibs-map" style="width: 100%; height: 500px; border-radius: 20px; overflow: hidden;"></div>
-</div>
+      <h2>NASA GIBS Weltkarte (MODIS Echtfarben)</h2>
+      <div id="gibs-map" style="width: 100%; height: 500px; border-radius: 20px; overflow: hidden;"></div>
+    </div>
   </section>
 
-  <script>
-    const apiKey = '4IRtkgIJiyGkWedkx3O2rnX9yUKjYVtQgJYdiRS7';
+  <div id="lightbox" onclick="closeLightbox()">
+    <img id="lightbox-img" src="" alt="Mars Foto groß" />
+  </div>
 
-    fetch(`https://api.nasa.gov/planetary/apod?api_key=${apiKey}`)
-      .then(res => res.json())
-      .then(data => {
-        document.getElementById('apod-date').innerText = `Datum: ${data.date}`;
-        document.getElementById('apod-img').src = data.url;
-        document.getElementById('apod-desc').innerText = data.explanation;
-      });
+  <div class="card">
+    <h2>Nächste Mondphase</h2>
+    <p id="moon-phase">Lade Mondphasen...</p>
+  </div>
 
-      async function fetchLatestMarsPhotos(apiKey) {
-    const gallery = document.getElementById('mars-gallery');
-    gallery.innerHTML = '<p>Suche nach aktuellen Fotos...</p>';
-    
-    let date = new Date();
-    for (let i = 0; i < 10; i++) {
-      const dateStr = date.toISOString().split('T')[0];
-      const url = `https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?earth_date=${dateStr}&api_key=${apiKey}`;
-      try {
-        const res = await fetch(url);
-        const data = await res.json();
-        if (data.photos && data.photos.length > 0) {
-          gallery.innerHTML = '';
-          data.photos.slice(0, 10).forEach(photo => {
-          const img = document.createElement('img');
-           img.src = photo.img_src;
-          img.alt = `Mars Foto vom ${photo.earth_date}`;
-          img.onclick = () => openLightbox(photo.img_src);
-          gallery.appendChild(img);
-          });
+  <div class="card">
+    <h2>Bevorstehende Himmelsereignisse</h2>
+    <ul id="sky-events"></ul>
+  </div>
 
-          return; // Erfolg -> beenden
-        }
-      } catch (e) {
-        console.error(`Fehler beim Laden von ${dateStr}:`, e);
-      }
-      date.setDate(date.getDate() - 1); // 1 Tag zurückgehen
-    }
-    gallery.innerHTML = '<p>Keine aktuellen Mars-Fotos gefunden.</p>';
-  }
-
-  // Starte die Funktion beim Laden
-  fetchLatestMarsPhotos(apiKey);
-
-    fetch(`https://api.nasa.gov/neo/rest/v1/feed/today?detailed=true&api_key=${apiKey}`)
-      .then(res => res.json())
-      .then(data => {
-        const neoList = document.getElementById('neo-list');
-        const today = new Date().toISOString().split('T')[0];
-        if (data.near_earth_objects[today]) {
-          data.near_earth_objects[today].slice(0, 5).forEach(obj => {
-            const li = document.createElement('li');
-            li.innerText = `${obj.name} fliegt mit ${obj.close_approach_data[0].relative_velocity.kilometers_per_hour.slice(0,5)} km/h vorbei.`;
-            neoList.appendChild(li);
-          });
-        } else {
-          neoList.innerHTML = '<li>Keine besonderen Objekte heute.</li>';
-        }
-      });
-
-    function toggleDescription() {
-      const desc = document.getElementById('apod-desc');
-      desc.classList.toggle('expanded');
-    }
-
-    gsap.registerPlugin(ScrollTrigger);
-
-    gsap.to("#intro .parallax-text", {
-      scrollTrigger: {
-        trigger: "#intro",
-        start: "top top",
-        end: "top+=200",
-        scrub: true
-      },
-      y: -100,
-      opacity: 0
-    });
-
-    gsap.to("#welcome .parallax-text", {
-      scrollTrigger: {
-        trigger: "#welcome",
-        start: "top center",
-        end: "top+=200",
-        scrub: true
-      },
-      y: -100,
-      opacity: 0
-    });
-
-    gsap.from(".hero-video-section", {
-      scrollTrigger: {
-        trigger: ".hero-video-section",
-        start: "top bottom",
-        end: "top center",
-        scrub: true
-      },
-      scale: 1.05,
-      y: 50,
-      opacity: 0
-    });
-
-    // Mondphase
-fetch('https://api.farmsense.net/v1/moonphases/?d=' + Math.floor(Date.now() / 1000))
-  .then(res => res.json())
-  .then(data => {
-    const moonPhase = data[0]?.Phase || 'Nicht verfügbar';
-    document.getElementById('moon-phase').innerText = `Nächste Phase: ${moonPhase}`;
-  })
-  .catch(() => {
-    document.getElementById('moon-phase').innerText = 'Fehler beim Laden der Mondphase.';
-  });
-
-  </script>
-<script>
-  const map = new ol.Map({
-    target: 'gibs-map',
-    layers: [
-      new ol.layer.Tile({
-        source: new ol.source.XYZ({
-          url: 'https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_CorrectedReflectance_TrueColor/default/{Time}/GoogleMapsCompatible_Level9/{z}/{y}/{x}.jpg',
-          attributions: 'NASA GIBS',
-          maxZoom: 9,
-          tileLoadFunction: function(imageTile, src) {
-            const date = new Date();
-            const formattedDate = date.toISOString().split('T')[0];
-            imageTile.getImage().src = src.replace('{Time}', formattedDate);
-          }
-        })
-      })
-    ],
-    view: new ol.View({
-      center: ol.proj.fromLonLat([0, 0]),
-      zoom: 2
-    })
-  });
-  function openLightbox(src) {
-  const lightbox = document.getElementById('lightbox');
-  const img = document.getElementById('lightbox-img');
-  img.src = src;
-  lightbox.style.display = 'flex';
-}
-
-function closeLightbox() {
-  const lightbox = document.getElementById('lightbox');
-  lightbox.style.display = 'none';
-}
-
-</script>
-<div id="lightbox" onclick="closeLightbox()">
-  <img id="lightbox-img" src="" alt="Mars Foto groß">
-</div>
-
-<div class="card">
-  <h2>Nächste Mondphase</h2>
-  <p id="moon-phase">Lade Mondphasen...</p>
-</div>
-
-<div class="card">
-  <h2>Bevorstehende Himmelsereignisse</h2>
-  <ul id="sky-events"></ul>
-</div>
-
-<script>
-  const skyEvents = [
-    { date: "10. Juli 2025", name: "Bockmond 🌕" },
-    { date: "24. Juli 2025", name: "Neumond 🌑" },
-    { date: "9. August 2025", name: "Störmond 🌕" },
-    { date: "12./13. August 2025", name: "Perseiden-Meteorschauer 🌠" },
-    { date: "19. August 2025", name: "Merkur in größter westlicher Elongation ☿️" },
-    { date: "23. August 2025", name: "Black Moon 🌑" },
-    { date: "7./8. September 2025", name: "Totale Mondfinsternis 🌘" },
-    { date: "7. September 2025", name: "Maismond 🌕" },
-    { date: "21. September 2025", name: "Partielle Sonnenfinsternis 🌒" },
-    { date: "21. September 2025", name: "Neumond 🌑" },
-    { date: "21. September 2025", name: "Saturn in Opposition 🪐" },
-    { date: "22. September 2025", name: "Herbst-Tagundnachtgleiche 🍁" },
-    { date: "7. Oktober 2025", name: "Erntemond 🌕" },
-    { date: "8./9. Oktober 2025", name: "Draconiden-Meteorschauer 🌠" },
-    { date: "21. Oktober 2025", name: "Neumond 🌑" },
-    { date: "21./22. Oktober 2025", name: "Orioniden-Meteorschauer 🌟" },
-    { date: "29. Oktober 2025", name: "Merkur in größter östlicher Elongation ☿️" },
-    { date: "5. November 2025", name: "Super-Bibermond 🌕✨" },
-    { date: "17./18. November 2025", name: "Leoniden-Meteorschauer 🌠" },
-    { date: "20. November 2025", name: "Mini-Neumond 🌑" },
-    { date: "4. Dezember 2025", name: "Super-Julmond 🌕❄️" },
-    { date: "7. Dezember 2025", name: "Merkur in größter westlicher Elongation ☿️" },
-    { date: "13./14. Dezember 2025", name: "Geminiden-Meteorschauer 🌠" },
-    { date: "20. Dezember 2025", name: "Neumond 🌑" },
-    { date: "21. Dezember 2025", name: "Wintersonnenwende ❄️" },
-    { date: "21./22. Dezember 2025", name: "Ursiden-Meteorschauer 🌠" }
-  ];
-
-  // Hilfsfunktion: Monatsname auf Nummer mappen
-  const monthMap = {
-    "Januar": 0,
-    "Februar": 1,
-    "März": 2,
-    "April": 3,
-    "Mai": 4,
-    "Juni": 5,
-    "Juli": 6,
-    "August": 7,
-    "September": 8,
-    "Oktober": 9,
-    "November": 10,
-    "Dezember": 11
-  };
-
-  function extractMonth(eventDateStr) {
-    // Beispiel Input: "10. Juli 2025" oder "12./13. August 2025"
-    // Wir suchen das Wort für Monat raus
-    const months = Object.keys(monthMap);
-    for (const month of months) {
-      if (eventDateStr.includes(month)) {
-        return monthMap[month];
-      }
-    }
-    return null;
-  }
-
-  // Aktuellen Monat bekommen
-  const now = new Date();
-  const currentMonth = now.getMonth();
-  const currentYear = now.getFullYear();
-
-  // Filter: nur Ereignisse vom aktuellen Monat und Jahr
-  const filteredEvents = skyEvents.filter(evt => {
-    // Monat aus String
-    const monthNum = extractMonth(evt.date);
-    // Jahr aus String holen (letzte 4 Ziffern, z.B. 2025)
-    const yearMatch = evt.date.match(/\d{4}/);
-    const yearNum = yearMatch ? parseInt(yearMatch[0]) : null;
-
-    return monthNum === currentMonth && yearNum === currentYear;
-  });
-
-  const ul = document.getElementById("sky-events");
-
-  if (filteredEvents.length === 0) {
-    const li = document.createElement("li");
-    li.textContent = "Keine Himmelsereignisse im aktuellen Monat.";
-    ul.appendChild(li);
-  } else {
-    filteredEvents.forEach(evt => {
-      const li = document.createElement("li");
-      li.textContent = `${evt.date} – ${evt.name}`;
-      ul.appendChild(li);
-    });
-  }
-</script>
-
-<section class="card" id="local-sky-events" style="max-width:900px; margin: 2rem auto;">
+  <section class="card" id="local-sky-events" style="max-width:900px; margin: 2rem auto;">
   <h2 style="font-size:2.5rem; font-weight:900; text-align:center; margin-bottom:1rem; color:#003366;">
     Linda, schau mal, was gerade jetzt direkt über Buchloe passiert!
   </h2>
@@ -476,124 +79,10 @@ function closeLightbox() {
     <li><strong>Monduntergang:</strong> <span id="moonset"></span></li>
     <li><strong>Aktuelle Mondphase:</strong> <span id="moonphase"></span></li>
     <li><strong>Nächster sichtbarer Meteorschauer:</strong> <span id="next-meteor-shower"></span></li>
-    <li><strong>ISS-Sichtungen heute:</strong> <div id="iss-pass"></div></li>
+    <li><strong>ISS-Sichtungen heute:</strong> <div id="iss-pass">Lade ISS-Sichtungen...</div></li>
   </ul>
 </section>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/suncalc/1.9.0/suncalc.min.js"></script>
-
-<script>
-(async function() {
-  const lat = 48.05;  // Buchloe
-  const lon = 10.85;
-  const now = new Date();
-
-  // --- SunCalc Daten ---
-  const times = SunCalc.getTimes(now, lat, lon);
-  const moonTimes = SunCalc.getMoonTimes(now, lat, lon);
-  const moonIllum = SunCalc.getMoonIllumination(now);
-
-  function formatTime(date) {
-    if (!date) return "nicht sichtbar heute";
-    return date.toLocaleTimeString('de-DE', {hour: '2-digit', minute: '2-digit'});
-  }
-
-  function getMoonPhaseName(phase) {
-    if (phase === 0 || phase === 1) return "Neumond 🌑";
-    else if (phase < 0.25) return "Zunehmender Sichelmond 🌒";
-    else if (phase === 0.25) return "Erstes Viertel 🌓";
-    else if (phase < 0.5) return "Zunehmender Mond 🌔";
-    else if (phase === 0.5) return "Vollmond 🌕";
-    else if (phase < 0.75) return "Abnehmender Mond 🌖";
-    else if (phase === 0.75) return "Letztes Viertel 🌗";
-    else return "Abnehmende Mondsichel 🌘";
-  }
-
-  // --- Meteorschauer Liste ---
-  const meteorShowers = [
-    { name: "Bockmond", date: new Date(now.getFullYear(), 6, 10) },      // 10. Juli
-    { name: "Neumond", date: new Date(now.getFullYear(), 6, 24) },       // 24. Juli
-    { name: "Störmond", date: new Date(now.getFullYear(), 7, 9) },       // 9. August
-    { name: "Perseiden-Meteorschauer", date: new Date(now.getFullYear(), 7, 12) }, // 12./13. Aug
-    { name: "Merkur in größter westlicher Elongation", date: new Date(now.getFullYear(), 7, 19) },
-    { name: "Black Moon", date: new Date(now.getFullYear(), 7, 23) },
-    { name: "Totale Mondfinsternis", date: new Date(now.getFullYear(), 8, 7) },
-    { name: "Maismond", date: new Date(now.getFullYear(), 8, 7) },
-    { name: "Partielle Sonnenfinsternis", date: new Date(now.getFullYear(), 8, 21) },
-    { name: "Neumond", date: new Date(now.getFullYear(), 8, 21) },
-    { name: "Saturn in Opposition", date: new Date(now.getFullYear(), 8, 21) },
-    { name: "September-Tagundnachtgleiche", date: new Date(now.getFullYear(), 8, 22) },
-    { name: "Erntemond", date: new Date(now.getFullYear(), 9, 7) },
-    { name: "Draconiden-Meteorschauer", date: new Date(now.getFullYear(), 9, 8) },
-    { name: "Neumond", date: new Date(now.getFullYear(), 9, 21) },
-    { name: "Orioniden-Meteorschauer", date: new Date(now.getFullYear(), 9, 21) },
-    { name: "Merkur in größter östlicher Elongation", date: new Date(now.getFullYear(), 9, 29) },
-    { name: "Super-Bibermond", date: new Date(now.getFullYear(), 10, 5) },
-    { name: "Leoniden-Meteorschauer", date: new Date(now.getFullYear(), 10, 17) },
-    { name: "Mini-Neumond", date: new Date(now.getFullYear(), 10, 20) },
-    { name: "Super-Julmond", date: new Date(now.getFullYear(), 11, 4) },
-    { name: "Merkur in größter westlicher Elongation", date: new Date(now.getFullYear(), 11, 7) },
-    { name: "Geminiden-Meteorschauer", date: new Date(now.getFullYear(), 11, 13) },
-    { name: "Neumond", date: new Date(now.getFullYear(), 11, 20) },
-    { name: "Dezember-Sonnenwende", date: new Date(now.getFullYear(), 11, 21) },
-    { name: "Ursiden-Meteorschauer", date: new Date(now.getFullYear(), 11, 21) }
-  ];
-
-  function getNextMeteorShower(today) {
-    let next = null;
-    for (const shower of meteorShowers) {
-      let showerDate = shower.date;
-      if (showerDate < today) {
-        showerDate = new Date(showerDate.getFullYear() + 1, showerDate.getMonth(), showerDate.getDate());
-      }
-      if (!next || showerDate < next.date) {
-        next = { name: shower.name, date: showerDate };
-      }
-    }
-    return next;
-  }
-
-  // --- ISS Daten von wheretheiss.at ---
-  async function fetchISSData() {
-    try {
-      const nowTimestamp = Math.floor(now.getTime() / 1000);
-      const url = `https://api.wheretheiss.at/v1/satellites/25544/passes?lat=${lat}&lon=${lon}&alt=500&n=5`;
-      const res = await fetch(url);
-      if (!res.ok) throw new Error('Fehler beim Laden der ISS-Daten');
-      const data = await res.json();
-      return data;
-    } catch (err) {
-      console.error(err);
-      return null;
-    }
-  }
-
-  function formatISSPass(pass) {
-    const start = new Date(pass.start * 1000);
-    const durationMin = Math.round(pass.duration / 60);
-    return `Start: ${start.toLocaleTimeString('de-DE', {hour:'2-digit', minute:'2-digit'})} Uhr, Dauer: ${durationMin} Min`;
-  }
-
-  // --- DOM füllen ---
-  document.getElementById('sunrise').textContent = formatTime(times.sunrise);
-  document.getElementById('sunset').textContent = formatTime(times.sunset);
-  document.getElementById('moonrise').textContent = formatTime(moonTimes.rise);
-  document.getElementById('moonset').textContent = formatTime(moonTimes.set);
-  document.getElementById('moonphase').textContent = getMoonPhaseName(moonIllum.phase);
-
-  const nextMeteor = getNextMeteorShower(now);
-  document.getElementById('next-meteor-shower').textContent = `${nextMeteor.name} am ${nextMeteor.date.toLocaleDateString('de-DE', {day:'numeric', month:'long'})}`;
-
-  const issPasses = await fetchISSData();
-  const issDiv = document.getElementById('iss-pass');
-  if (issPasses && issPasses.length > 0) {
-    issDiv.innerHTML = issPasses.slice(0, 3).map(formatISSPass).map(p => `<p>${p}</p>`).join('');
-  } else {
-    issDiv.textContent = 'Keine ISS-Sichtungen verfügbar.';
-  }
-
-})();
-</script>
-
+  <script src="script.js"></script>
 </body>
 </html>
