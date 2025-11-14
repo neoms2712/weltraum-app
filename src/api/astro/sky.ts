@@ -56,8 +56,7 @@ export const getPlanetVisibilities = (date = new Date()): PlanetVisibility[] => 
     const { altitude, azimuth } = Horizon(date, observer, eq.ra, eq.dec, 'normal')
     const illumination = Illumination(config.body, date)
     const visible = altitude >= config.minAlt
-    const fraction = illumination.phase_fraction ?? illumination.phaseFraction ?? 0
-    const percentage = Math.round(fraction * 100)
+    const percentage = Math.round((illumination.phase_fraction ?? 0) * 100)
     return {
       id: config.id,
       name: config.name,

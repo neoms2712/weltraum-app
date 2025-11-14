@@ -61,8 +61,9 @@ const loadTle = async () => {
 }
 
 const computeAltitude = (satrec: SatRec, date: Date, lat: number, lon: number) => {
-  const position = propagate(satrec, date).position
-  if (!position) return null
+  const result = propagate(satrec, date)
+  if (!result || !result.position) return null
+  const position = result.position
   const gmst = gstime(date)
   const positionEcf = eciToEcf(position, gmst)
   const observer = {
