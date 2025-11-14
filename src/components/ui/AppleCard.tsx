@@ -12,7 +12,7 @@ type AppleCardProps = {
   eyebrow?: string
   title?: string
   children: ReactNode
-  variant?: AppleCardVariant
+  variant?: AppleCardVariant | AppleCardVariant[]
   motionPreset?: MotionPreset
   animate?: boolean
 }
@@ -180,10 +180,14 @@ export function AppleCard({
     return () => ctx.revert()
   }, [motionPreset, animate, variant])
 
-  const variantClass = variant !== 'default' ? `apple-card--${variant}` : ''
+  const variantList = Array.isArray(variant) ? variant : [variant]
+  const variantClass = variantList
+    .filter((value) => value && value !== 'default')
+    .map((value) => `apple-card--${value}`)
+    .join(' ')
 
   return (
-    <article ref={cardRef} className={`apple-card ${variantClass}`}>
+    <article ref={cardRef} className={`apple-card ${variantClass}`.trim()}>
       {eyebrow && <p className="apple-card-eyebrow">{eyebrow}</p>}
       {title && <h3 className="apple-card-title">{title}</h3>}
       <div className="apple-card-body">{children}</div>

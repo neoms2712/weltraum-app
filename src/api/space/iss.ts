@@ -17,7 +17,6 @@ export interface IssPass {
   durationSeconds: number
 }
 
-const TLE_URL = 'https://celestrak.org/NORAD/elements/stations.txt'
 const TLE_ALT_URL = 'https://tle.ivanstanojevic.me/api/tle/25544'
 const ALTITUDE_THRESHOLD = 10 // degrees
 const HOURS_AHEAD = 12
@@ -29,35 +28,16 @@ const FALLBACK_TLE = {
 }
 
 const loadTle = async () => {
-  const attempts = [
-    async () => {
-      const response = await fetch(TLE_URL, { mode: 'cors' })
-      if (!response.ok) throw new Error(`Status ${response.status}`)
-      const text = await response.text()
-      const lines = text.split(/\r?\n/).map((line) => line.trim())
-      const index = lines.findIndex((line) => line.toUpperCase().startsWith('ISS (ZARYA)'))
-      if (index === -1 || index + 2 >= lines.length) throw new Error('ISS TLE nicht gefunden')
-      return { line1: lines[index + 1], line2: lines[index + 2] }
-    },
-    async () => {
-      const response = await fetch(TLE_ALT_URL)
-      if (!response.ok) throw new Error(`Status ${response.status}`)
-      const json = (await response.json()) as { line1?: string; line2?: string }
-      if (!json.line1 || !json.line2) throw new Error('Alternatives TLE unvollständig')
-      return { line1: json.line1, line2: json.line2 }
-    },
-  ]
-
-  for (const attempt of attempts) {
-    try {
-      return await attempt()
-    } catch (error) {
-      console.warn('Konnte aktuelles TLE nicht laden, versuche nächste Quelle.', error)
-    }
+  try {
+    const response = await fetch(TLE_ALT_URL)
+    if (!response.ok) throw new Error(`Status ${response.status}`)
+    const json = (await response.json()) as { line1?: string; line2?: string }
+    if (!json.line1 || !json.line2) throw new Error('Alternatives TLE unvollständig')
+    return { line1: json.line1, line2: json.line2 }
+  } catch (error) {
+    console.warn('Nutze statisches ISS-TLE als Fallback.', error)
+    return FALLBACK_TLE
   }
-
-  console.warn('Nutze statisches ISS-TLE als Fallback.')
-  return FALLBACK_TLE
 }
 
 const computeAltitude = (satrec: SatRec, date: Date, lat: number, lon: number) => {

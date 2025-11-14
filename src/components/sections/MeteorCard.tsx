@@ -26,7 +26,7 @@ export function MeteorCard() {
     <AppleCard
       eyebrow="Meteore & Deep Sky"
       title="Beobachtungsempfehlung"
-      variant="tall"
+      variant={['wide', 'tall']}
       motionPreset="deep"
     >
       <div className="meteor-list">
