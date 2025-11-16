@@ -1,10 +1,14 @@
 import { useMemo } from 'react'
-import type { CelestialEvent } from '@/api/astro/celestialEvents'
-import { getConstellationHighlights } from '@/api/astro/sky'
-import { getMoonPhase } from '@/api'
 import { AppleCard } from '@/components/ui/AppleCard'
+import { getMoonPhase } from '@/api'
+import { getConstellationHighlights } from '@/api/astro/sky'
+import type { CelestialEvent } from '@/api/astro/celestialEvents'
 
-const nextEventName = (events: CelestialEvent[] | null) => {
+type CosmicPersonalityCardProps = {
+  events: CelestialEvent[] | null
+}
+
+const nextEventTitle = (events: CelestialEvent[] | null) => {
   if (!events || events.length === 0) return 'das nächste Himmelsereignis'
   const now = Date.now()
   const future = events
@@ -14,12 +18,12 @@ const nextEventName = (events: CelestialEvent[] | null) => {
   return future[0]?.event.name ?? events[0].name
 }
 
-export function PersonalCard({ events }: { events: CelestialEvent[] | null }) {
+export function CosmicPersonalityCard({ events }: CosmicPersonalityCardProps) {
   const moon = useMemo(() => getMoonPhase(), [])
   const constellations = useMemo(() => getConstellationHighlights(), [])
   const constellation = constellations[0]?.name ?? 'Cassiopeia'
   const constellationMeaning = constellations[0]?.story ?? 'Ruhe und Harmonie'
-  const eventTitle = nextEventName(events)
+  const eventTitle = nextEventTitle(events)
 
   const personality = {
     eyebrow: 'Kosmische Stimmung · Buchloe',
@@ -32,17 +36,16 @@ export function PersonalCard({ events }: { events: CelestialEvent[] | null }) {
   }
 
   return (
-    <AppleCard
-      eyebrow={personality.eyebrow}
-      title={personality.title}
-      variant="personal"
-      motionPreset="cinematic"
-    >
-      <div className="cosmic-personality">
-        <div className="cosmic-personality__flare" />
-        <p>{personality.moonText}</p>
-        <p>{personality.constellationText}</p>
-        <p>{personality.eventText}</p>
+    <AppleCard variant="personal" motionPreset="spotlight">
+      <div className="cosmic-personality personal-gradient">
+        <span className="cosmic-personality__badge">
+          <span>✦</span>
+          {personality.eyebrow}
+        </span>
+        <h3 className="cosmic-personality__headline">{personality.title}</h3>
+        <p className="cosmic-personality__text">{personality.moonText}</p>
+        <p className="cosmic-personality__text">{personality.constellationText}</p>
+        <p className="cosmic-personality__text">{personality.eventText}</p>
         <p className="cosmic-personality__poetry">{personality.poetry}</p>
       </div>
     </AppleCard>

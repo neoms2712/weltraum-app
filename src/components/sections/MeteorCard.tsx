@@ -43,7 +43,7 @@ export function MeteorCard() {
 
       <div className="deep-sky-strip">
         {deepSky.map((obj) => (
-          <div className="deep-sky-card" key={obj.id}>
+          <div className="deep-sky-card deep-sky-mini-card" key={obj.id}>
             <strong>{obj.name}</strong>
             <p>{obj.description}</p>
           </div>

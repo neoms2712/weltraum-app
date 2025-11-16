@@ -100,6 +100,7 @@ export function AppleCard({
     const cfg = MOTION_PRESETS[motionPreset]
 
     const ctx = gsap.context(() => {
+      el.setAttribute('data-shadow', 'soft')
       gsap.set(el, {
         opacity: 0,
         y: cfg.y,
@@ -175,6 +176,16 @@ export function AppleCard({
           ease: 'none',
         })
       }
+
+      ScrollTrigger.create({
+        trigger: el,
+        start: 'top 85%',
+        end: 'bottom 30%',
+        scrub: true,
+        onUpdate: (self) => {
+          el.setAttribute('data-shadow', self.progress > 0.4 ? 'strong' : 'soft')
+        },
+      })
     }, cardRef)
 
     return () => ctx.revert()
@@ -187,7 +198,7 @@ export function AppleCard({
     .join(' ')
 
   return (
-    <article ref={cardRef} className={`apple-card ${variantClass}`.trim()}>
+    <article ref={cardRef} className={`apple-card fade-in ${variantClass}`.trim()}>
       {eyebrow && <p className="apple-card-eyebrow">{eyebrow}</p>}
       {title && <h3 className="apple-card-title">{title}</h3>}
       <div className="apple-card-body">{children}</div>
