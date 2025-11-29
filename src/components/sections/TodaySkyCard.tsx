@@ -51,9 +51,10 @@ export function TodaySkyCard({ events }: { events: CelestialEvent[] | null }) {
           <strong>
             {issPasses.status === 'loading' && 'lädt…'}
             {issPasses.status === 'error' && 'offline'}
-            {issPasses.status === 'success' && firstPass
-              ? `${formatDate(firstPass.start)} · ${Math.round(firstPass.durationSeconds)}s`
-              : null}
+            {issPasses.status === 'success' &&
+              (firstPass
+                ? `${formatDate(firstPass.start)} · ${Math.round(firstPass.durationSeconds)}s`
+                : 'Heute kein Überflug berechnet')}
           </strong>
         </li>
       </ul>

@@ -1,6 +1,27 @@
-import { forwardRef } from 'react'
+import { forwardRef, useMemo } from 'react'
+import { appSettings } from '@/config/settings'
+import { getMoonPhase, getLocalSkyTimes } from '@/api/astro/localSky'
+import { getPlanetVisibilities } from '@/api/astro/sky'
+
+const formatTime = (date: Date | null | undefined) =>
+  date ? new Intl.DateTimeFormat('de-DE', { hour: '2-digit', minute: '2-digit' }).format(date) : '–'
 
 export const ObservatoryPanels = forwardRef<HTMLElement>(function ObservatoryPanels(_, ref) {
+  const moon = useMemo(() => getMoonPhase(), [])
+  const skyTimes = useMemo(
+    () => getLocalSkyTimes(appSettings.location.lat, appSettings.location.lon),
+    [],
+  )
+  const planetVis = useMemo(
+    () => getPlanetVisibilities().filter((p) => p.visible).sort((a, b) => b.altitude - a.altitude),
+    [],
+  )
+
+  const planetBarWidth = (alt: number) => {
+    const pct = Math.max(0, Math.min(100, Math.round((alt / 90) * 100)))
+    return `${pct}%`
+  }
+
   return (
     <section ref={ref} className="section section-observatory fade-section" data-parallax="true">
       <div className="ambient-layer ambient-layer--soft-stars" />
@@ -8,14 +29,15 @@ export const ObservatoryPanels = forwardRef<HTMLElement>(function ObservatoryPan
       <div className="section-kicker">Observatorium</div>
       <h2 className="section-title">Wie der Himmel sich heute bewegt</h2>
       <p className="section-sub subhead">
-        Mondbahn, Planetensichtbarkeit und ein kleiner Blick in deine Sternkarte – minimalistisch
-        visualisiert.
+        Mondbahn und Planetensichtbarkeit – lebendig statt statisch.
       </p>
 
       <div className="observatory-grid">
         <div className="observatory-card">
           <h3 className="observatory-card__title">Mondbahn heute</h3>
-          <p className="observatory-card__subtitle">Vom Aufgang bis zum höchsten Punkt.</p>
+          <p className="observatory-card__subtitle">
+            Phase: {moon.name} · Auf: {formatTime(skyTimes.moonrise)} · Unter: {formatTime(skyTimes.moonset)}
+          </p>
           <div className="observatory-visual observatory-visual--arc">
             <svg viewBox="0 0 200 100" className="observatory-arc">
               <path
@@ -36,41 +58,21 @@ export const ObservatoryPanels = forwardRef<HTMLElement>(function ObservatoryPan
           <h3 className="observatory-card__title">Planetensichtbarkeit</h3>
           <p className="observatory-card__subtitle">Wer begleitet dich heute am Abendhimmel?</p>
           <div className="observatory-visual observatory-visual--bars">
-            <div className="obs-bar">
-              <span className="obs-bar__label">Jupiter</span>
-              <div className="obs-bar__track">
-                <div className="obs-bar__fill obs-bar__fill--primary" style={{ width: '80%' }} />
+            {planetVis.length === 0 && (
+              <p className="loading-text">Heute sind keine Planeten über dem Horizont.</p>
+            )}
+            {planetVis.map((planet) => (
+              <div className="obs-bar" key={planet.id}>
+                <span className="obs-bar__label">{planet.name}</span>
+                <div className="obs-bar__track">
+                  <div
+                    className="obs-bar__fill obs-bar__fill--primary"
+                    style={{ width: planetBarWidth(planet.altitude) }}
+                  />
+                </div>
+                <span className="obs-bar__value">{Math.round(planet.altitude)}°</span>
               </div>
-            </div>
-            <div className="obs-bar">
-              <span className="obs-bar__label">Mars</span>
-              <div className="obs-bar__track">
-                <div className="obs-bar__fill" style={{ width: '40%' }} />
-              </div>
-            </div>
-            <div className="obs-bar">
-              <span className="obs-bar__label">Venus</span>
-              <div className="obs-bar__track">
-                <div className="obs-bar__fill" style={{ width: '60%' }} />
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="observatory-card">
-          <h3 className="observatory-card__title">Mini-Sternkarte</h3>
-          <p className="observatory-card__subtitle">
-            Cassiopeia, Perseus &amp; Freunde – als kleine Karte über dir.
-          </p>
-          <div className="observatory-visual observatory-visual--starmap">
-            <div className="starmap">
-              <span className="starmap__star starmap__star--a" />
-              <span className="starmap__star starmap__star--b" />
-              <span className="starmap__star starmap__star--c" />
-              <span className="starmap__star starmap__star--d" />
-              <span className="starmap__star starmap__star--e" />
-              <span className="starmap__connection starmap__connection--cassiopeia" />
-            </div>
+            ))}
           </div>
         </div>
       </div>
