@@ -938,6 +938,20 @@ a:hover {
   color: var(--text-secondary);
 }
 
+.nasa-apod__readmore {
+  align-self: flex-start;
+  background: none;
+  border: none;
+  color: #0071e3;
+  font-size: 0.95rem;
+  padding: 0;
+  cursor: pointer;
+}
+
+.nasa-apod__readmore:hover {
+  text-decoration: underline;
+}
+
 .loading-text {
   color: var(--text-secondary);
   opacity: 0.75;

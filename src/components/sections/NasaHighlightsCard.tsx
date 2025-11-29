@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useAsyncData } from '@/hooks/useAsyncData'
 import { fetchApod } from '@/api/nasa/apod'
 import { fetchMarsPhotos } from '@/api/nasa/marsRover'
@@ -8,9 +9,9 @@ export function NasaHighlightsCard() {
   const apod = useAsyncData(fetchApod, [])
   const mars = useAsyncData(() => fetchMarsPhotos(6), [])
   const neos = useAsyncData(() => fetchNeoHighlights(5), [])
+  const [showFullApod, setShowFullApod] = useState(false)
 
-  const shortText = (t: string) =>
-    t.length > 220 ? t.slice(0, 216).trim() + ' …' : t
+  const shortText = (t: string) => (t.length > 220 ? `${t.slice(0, 216).trim()}...` : t)
 
   return (
     <AppleCard
@@ -28,7 +29,18 @@ export function NasaHighlightsCard() {
             <div className="nasa-apod__text">
               <strong className="nasa-apod__title">{apod.data.title}</strong>
               <span className="nasa-apod__date">{apod.data.date}</span>
-              <p className="nasa-apod__desc">{shortText(apod.data.explanation)}</p>
+              <p className="nasa-apod__desc">
+                {showFullApod ? apod.data.explanation : shortText(apod.data.explanation)}
+              </p>
+              {apod.data.explanation.length > 220 && (
+                <button
+                  type="button"
+                  className="nasa-apod__readmore"
+                  onClick={() => setShowFullApod((v) => !v)}
+                >
+                  {showFullApod ? 'Weniger anzeigen' : 'Mehr lesen'}
+                </button>
+              )}
             </div>
           </>
         )}
@@ -55,7 +67,7 @@ export function NasaHighlightsCard() {
               <span>{neo.diameterMeters.toFixed(1)} m</span>
               <span>{neo.orbitingBody}</span>
               <span className={neo.hazardous ? 'danger' : 'safe'}>
-                {neo.hazardous ? '⚠ gefährlich' : '✔ sicher'}
+                {neo.hazardous ? '⚠️ gefährlich' : '✅ sicher'}
               </span>
             </div>
           ))}

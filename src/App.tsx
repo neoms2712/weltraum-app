@@ -14,7 +14,6 @@ import { useFadeIn } from '@/hooks/useFadeIn'
 import { MomentsCard } from '@/components/sections/MomentsCard'
 import { useSectionAnimate } from '@/hooks/useSectionAnimate'
 import { CosmicPersonalityCard } from '@/components/sections/CosmicPersonalityCard'
-import { MiniStarmapCard } from '@/components/sections/MiniStarmapCard'
 import { Starfield } from '@/components/visuals/Starfield'
 import { ShootingStar } from '@/components/visuals/ShootingStar'
 import { ConstellationCard } from '@/components/visuals/ConstellationCard'
@@ -115,7 +114,6 @@ function App() {
             <TodaySkyCard events={celestialEventsQuery.data} />
             <PlanetsCard />
             <MeteorCard />
-            <MiniStarmapCard />
           </div>
         </section>
 
@@ -223,8 +221,6 @@ function App() {
         <section
           ref={sectionFourRef}
           className="section section--personal fade-section"
-          data-depth="2.5"
-          data-parallax="true"
         >
           <AmbientLayer variant="corner-glow" />
           <div className="section-glow" />
