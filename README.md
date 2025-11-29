@@ -1,5 +1,7 @@
 # Weltraum-App – Moderne Toolchain
 
+URL:https://neoms2712.github.io/weltraum-app/
+
 Dieses Projekt ersetzt die alte GitHub-Pages-Variante durch eine modulare Vite/React/TypeScript-Codebasis. NASA-Daten, lokale Himmelsereignisse und Layout-Elemente liegen jetzt als Komponenten und Services vor und lassen sich Schritt für Schritt ins neue Design überführen.
 
 ## Quickstart
