@@ -684,6 +684,19 @@ a:hover {
   -webkit-overflow-scrolling: touch;
 }
 
+.strip-hint {
+  font-size: 0.9rem;
+  color: #8a8a8f;
+  margin: 0 0 0.6rem;
+  letter-spacing: 0.01em;
+}
+
+@media (min-width: 641px) {
+  .strip-hint {
+    display: none;
+  }
+}
+
 .planet-strip::-webkit-scrollbar {
   height: 0;
 }
@@ -1383,12 +1396,14 @@ a:hover {
 
 @media (max-width: 640px) {
   .astral-timeline::after {
-    content: '← wischen →';
-    position: absolute;
-    bottom: -28px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 0.75rem;
+    content: '? wischen ?';
+    top: -22px;
+    bottom: auto;
+    left: 0;
+    right: 0;
+    width: 100%;
+    text-align: center;
+    font-size: 0.78rem;
     color: rgba(0, 0, 0, 0.45);
     letter-spacing: 0.05em;
     pointer-events: none;
@@ -1409,17 +1424,10 @@ a:hover {
     opacity: 1;
   }
 
-  @keyframes timeline-hint-blink {
-    0% {
-      opacity: 0.3;
-    }
-    50% {
-      opacity: 1;
-    }
-    100% {
-      opacity: 0.3;
-    }
+  .astral-timeline {
+    padding-top: 20px;
   }
+}
 }
 .timeline-intro {
   font-size: 0.85rem;
@@ -1427,6 +1435,14 @@ a:hover {
   text-transform: uppercase;
   color: rgba(0, 0, 0, 0.45);
   margin: 0 0 12px;
+  display: block;
+}
+
+@media (max-width: 640px) {
+  .timeline-intro {
+    margin: 0 0 16px;
+    padding-left: 2px;
+  }
 }
 
 /* VISUAL MODULES ----------------------------------- */
@@ -1732,3 +1748,4 @@ a:hover {
   transform: skewX(18deg);
   opacity: 0.9;
 }
+

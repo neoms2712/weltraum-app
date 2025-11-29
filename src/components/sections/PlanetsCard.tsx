@@ -17,6 +17,7 @@ export function PlanetsCard() {
       variant="wide"
       motionPreset="medium"
     >
+      <p className="strip-hint">Wischen für mehr Planeten</p>
       <div className="planet-strip" ref={stripRef}>
         {planets.map((planet) => (
           <div className="planet-tile" key={planet.id}>

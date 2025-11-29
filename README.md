@@ -58,9 +58,9 @@ src/
   components/     # Layout-, Section- und UI-Komponenten
   hooks/          # Gemeinsame React Hooks (z. B. useAsyncData)
   styles/         # Globales Theming & Layoutbasis
+public/media/     # Statische Assets wie Weltallvideo.mp4
 api/nasa/[...path].ts  # Vercel Serverless Proxy für NASA
 api/iss/[...path].ts   # Serverless Proxy für Open-Notify/ISS
-legacy/           # Ursprüngliche statische Assets als Referenz
 ```
 
 ## Weiteres Vorgehen

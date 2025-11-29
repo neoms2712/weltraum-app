@@ -12,10 +12,9 @@ const reactRecommendedRules = reactPlugin.configs.recommended.rules
 const jsxA11yRecommended = jsxA11y.flatConfigs.recommended
 
 export default defineConfig([
-  globalIgnores(['dist', 'legacy', 'coverage']),
+  globalIgnores(['dist', 'coverage']),
   {
     files: ['**/*.{ts,tsx}'],
-    ignores: ['legacy/**'],
     extends: [
       js.configs.recommended,
       ...tseslint.configs.recommended,
