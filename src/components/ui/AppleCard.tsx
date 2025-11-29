@@ -37,7 +37,7 @@ const MOTION_PRESETS: Record<MotionPreset, MotionConfig> = {
     liftScale: 0.004,
     driftY: 1.5,
     duration: 0.8,
-    ease: 'power2.out',
+    ease: 'power1.out',
   },
   medium: {
     start: 'top 85%',
@@ -47,7 +47,7 @@ const MOTION_PRESETS: Record<MotionPreset, MotionConfig> = {
     liftScale: 0.007,
     driftY: 3,
     duration: 1,
-    ease: 'power2.out',
+    ease: 'power1.out',
   },
   deep: {
     start: 'top 80%',
@@ -56,8 +56,8 @@ const MOTION_PRESETS: Record<MotionPreset, MotionConfig> = {
     scaleTo: 1.01,
     liftScale: 0.012,
     driftY: 5,
-    duration: 1.2,
-    ease: 'power3.out',
+    duration: 1.1,
+    ease: 'power1.out',
   },
   spotlight: {
     start: 'top 78%',
@@ -66,8 +66,8 @@ const MOTION_PRESETS: Record<MotionPreset, MotionConfig> = {
     scaleTo: 1,
     liftScale: 0.006,
     driftY: 2,
-    duration: 1.3,
-    ease: 'power2.inOut',
+    duration: 1.2,
+    ease: 'power1.out',
   },
   cinematic: {
     start: 'top 75%',
@@ -76,8 +76,8 @@ const MOTION_PRESETS: Record<MotionPreset, MotionConfig> = {
     scaleTo: 1.02,
     liftScale: 0.015,
     driftY: 7,
-    duration: 1.45,
-    ease: 'power4.out',
+    duration: 1.4,
+    ease: 'power2.out',
   },
 }
 

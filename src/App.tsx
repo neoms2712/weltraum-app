@@ -14,6 +14,7 @@ import { useFadeIn } from '@/hooks/useFadeIn'
 import { MomentsCard } from '@/components/sections/MomentsCard'
 import { useSectionAnimate } from '@/hooks/useSectionAnimate'
 import { CosmicPersonalityCard } from '@/components/sections/CosmicPersonalityCard'
+import { MiniStarmapCard } from '@/components/sections/MiniStarmapCard'
 import { Starfield } from '@/components/visuals/Starfield'
 import { ShootingStar } from '@/components/visuals/ShootingStar'
 import { ConstellationCard } from '@/components/visuals/ConstellationCard'
@@ -46,7 +47,7 @@ function App() {
     tl.fromTo(
       pageEl,
       { opacity: 0, y: 30, scale: 0.98 },
-      { opacity: 1, y: 0, scale: 1, duration: 0.9, ease: 'power2.out', delay: 0.15 },
+      { opacity: 1, y: 0, scale: 1, duration: 0.9, ease: 'power1.out', delay: 0.15 },
     )
 
     if (bloomEl) {
@@ -114,14 +115,17 @@ function App() {
             <TodaySkyCard events={celestialEventsQuery.data} />
             <PlanetsCard />
             <MeteorCard />
+            <MiniStarmapCard />
           </div>
         </section>
 
         <Starfield />
 
-        <p className="accent-text">
-          Die wichtigsten Himmelsereignisse des Monats – klar strukturiert für dich.
-        </p>
+        <section className="section section--bridge">
+          <p className="accent-text">
+            Die wichtigsten Himmelsereignisse des Monats – klar strukturiert für dich.
+          </p>
+        </section>
 
         {/* SECTION 2 – Deep Sky & Ereignisse */}
         <div className="ambient-divider" />
@@ -136,6 +140,9 @@ function App() {
           <header className="section-header">
             <p className="section-kicker">Himmelskalender</p>
             <h2>Deep Sky & Beobachtungen</h2>
+            <p className="section-sub subhead">
+              Wichtige Sichtbarkeiten und Ereignisse im Überblick.
+            </p>
           </header>
 
           <div className="section-cards">
@@ -196,6 +203,9 @@ function App() {
           <header className="section-header">
             <p className="section-kicker">Mission Updates</p>
             <h2>NASA Highlights</h2>
+            <p className="section-sub subhead">
+              Aktuelle Bilder, Missionen und Einblicke aus dem NASA-Kosmos.
+            </p>
           </header>
 
           <NasaHighlightsCard />
@@ -203,9 +213,11 @@ function App() {
 
         <ShootingStar />
 
-        <p className="accent-text">
-          Persönliche Momente – kosmisch und nah zugleich.
-        </p>
+        <section className="section section--bridge">
+          <p className="accent-text">
+            Persönliche Momente – kosmisch und nah zugleich.
+          </p>
+        </section>
 
         {/* SECTION 4 – Für Dich */}
         <section
