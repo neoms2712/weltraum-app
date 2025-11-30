@@ -46,7 +46,7 @@ export function NasaHighlightsCard() {
         )}
         {apod.status === 'loading' && <p className="loading-text">APOD wird geladen …</p>}
       </div>
-      <div className="nasa-strip-label">Mars Rover – Latest Discoveries</div>
+      <div className="nasa-strip-label">Mars Rover – neueste Aufnahmen</div>
       <div className="nasa-strip">
         {mars.data?.map((photo) => (
           <div key={photo.id} className="nasa-strip__item">
@@ -59,7 +59,7 @@ export function NasaHighlightsCard() {
         ))}
       </div>
       <div className="nasa-neo">
-        <p className="nasa-strip-label">Near Earth Objects</p>
+        <p className="nasa-strip-label">Asteroiden in Erdnähe</p>
         <div className="nasa-neo__grid">
           {neos.data?.slice(0, 4).map((neo) => (
             <div key={neo.id} className="nasa-neo__tile">
