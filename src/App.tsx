@@ -167,7 +167,7 @@ function App() {
             <p className="section-sub subhead">Kleine Hinweise für den perfekten Weltraumabend.</p>
           </header>
           <div className="section-cards">
-            <MomentsCard />
+            <MomentsCard events={celestialEventsQuery.data} />
           </div>
         </section>
 
